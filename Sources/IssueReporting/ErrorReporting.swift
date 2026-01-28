@@ -86,7 +86,7 @@ public func withErrorReporting<R>(
   ) as R??) ?? nil
 }
 
-#if compiler(>=6)
+#if compiler(>=6) && !os(Android)
   /// Evaluates a throwing closure and automatically catches and reports any error thrown.
   ///
   /// - Parameters:
@@ -107,8 +107,8 @@ public func withErrorReporting<R>(
     filePath: StaticString = #filePath,
     line: UInt = #line,
     column: UInt = #column,
-    //isolation: isolated (any Actor)? = #isolation,
-    catching body: () async throws -> R
+    isolation: isolated (any Actor)? = #isolation,
+    catching body: () async throws -> sending R
   ) async -> R? {
     if let reporters {
       return await withIssueReporters(reporters) {
@@ -165,8 +165,8 @@ public func withErrorReporting<R>(
     filePath: StaticString = #filePath,
     line: UInt = #line,
     column: UInt = #column,
-    //isolation: isolated (any Actor)? = #isolation,
-    catching body: () async throws -> R?
+    isolation: isolated (any Actor)? = #isolation,
+    catching body: () async throws -> sending R?
   ) async -> R? {
     (await withErrorReporting(
       message(),
@@ -180,7 +180,7 @@ public func withErrorReporting<R>(
   }
 #else
   @_transparent
-  @_unsafeInheritExecutor
+  //@_unsafeInheritExecutor
   public func withErrorReporting<R>(
     _ message: @autoclosure () -> String? = nil,
     to reporters: [any IssueReporter]? = nil,
@@ -226,7 +226,7 @@ public func withErrorReporting<R>(
   }
 
   @_transparent
-  @_unsafeInheritExecutor
+  //@_unsafeInheritExecutor
   public func withErrorReporting<R>(
     _ message: @autoclosure () -> String? = nil,
     to reporters: [any IssueReporter]? = nil,
