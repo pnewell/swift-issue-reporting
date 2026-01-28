@@ -107,7 +107,7 @@ public func withErrorReporting<R>(
     filePath: StaticString = #filePath,
     line: UInt = #line,
     column: UInt = #column,
-    isolation: isolated (any Actor)? = #isolation,
+    //isolation: isolated (any Actor)? = #isolation,
     catching body: () async throws -> sending R
   ) async -> R? {
     if let reporters {
@@ -165,7 +165,7 @@ public func withErrorReporting<R>(
     filePath: StaticString = #filePath,
     line: UInt = #line,
     column: UInt = #column,
-    isolation: isolated (any Actor)? = #isolation,
+    //isolation: isolated (any Actor)? = #isolation,
     catching body: () async throws -> sending R?
   ) async -> R? {
     (await withErrorReporting(
