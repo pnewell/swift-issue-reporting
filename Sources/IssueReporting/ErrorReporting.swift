@@ -108,7 +108,7 @@ public func withErrorReporting<R>(
     line: UInt = #line,
     column: UInt = #column,
     //isolation: isolated (any Actor)? = #isolation,
-    catching body: () async throws -> sending R
+    catching body: () async throws -> R
   ) async -> R? {
     if let reporters {
       return await withIssueReporters(reporters) {
@@ -166,7 +166,7 @@ public func withErrorReporting<R>(
     line: UInt = #line,
     column: UInt = #column,
     //isolation: isolated (any Actor)? = #isolation,
-    catching body: () async throws -> sending R?
+    catching body: () async throws -> R?
   ) async -> R? {
     (await withErrorReporting(
       message(),
