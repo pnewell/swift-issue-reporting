@@ -86,7 +86,7 @@ public func withErrorReporting<R>(
   ) as R??) ?? nil
 }
 
-#if compiler(>=6) && !os(Android)
+#if compiler(>=6)
   /// Evaluates a throwing closure and automatically catches and reports any error thrown.
   ///
   /// - Parameters:
